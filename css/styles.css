@@ -354,10 +354,29 @@ input:checked + .slider:before {
   .catalog {
     grid-template-columns: repeat(2, 1fr);
   }
+  .search-wrapper {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+  }
 }
 
 @media (max-width: 480px) {
   .catalog {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1repeat(2, 1fr);
+  }
+  .search-wrapper {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+  }
+  .catalog-categories {
+    display: grid;
+    max-width: 100%;
+    width: 100%;
   }
 }
