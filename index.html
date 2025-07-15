@@ -10,7 +10,7 @@
   <meta property="og:title" content="Catálogo de Figuras de Acción" />
   <meta property="og:description" content="Explora nuestra selección de figuras coleccionables disponibles en Mercado Libre." />
   <meta property="og:image" content="assets/logotransparente300x300.png" />
-  <meta property="og:url" content="https://cavernaretro.github.io/ml-catalogo" />
+  <meta property="og:url" content="https://cavernaretro.github.io/catalago-ml" />
   <meta property="og:type" content="website" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catálogo de Figuras de Acción | Venta en Mercado Libre</title>
@@ -47,11 +47,11 @@
 
   <!-- CONTROLES -->
   <div class="catalog-controls">
-  <div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="Buscar artículos..." />
-    <button type="button" id="clearSearch" title="Borrar búsqueda">×</button>
-  </div>
-
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="Buscar artículos..." />
+      <button type="button" id="clearSearch" title="Borrar búsqueda">×</button>
+    </div>
+    <div class="catalog-categories">
     <select id="categorySelect">
       <option value="all">Todas las categorías</option>
       <option value="animales">Animales</option>
@@ -72,7 +72,8 @@
       <option value="low">Precio: Menor a mayor</option>
       <option value="high">Precio: Mayor a menor</option>
     </select>
-
+    </div>
+  </div>
   <!-- CATÁLOGO -->
   <section class="catalog" id="catalog"></section>
 
