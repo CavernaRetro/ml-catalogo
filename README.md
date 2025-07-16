@@ -1,16 +1,22 @@
-# Catálogo Mercado Libre – La Caverna Retro 🕹️
+# 🛒 Catálogo Mercado Libre – La Caverna Retro
 
-Este proyecto es una página web tipo catálogo donde se listan productos vendidos en Mercado Libre, cargados dinámicamente desde Google Sheets.
+Este sitio muestra un catálogo de productos conectados a Google Sheets y enlazados a publicaciones de Mercado Libre.
 
-## Funcionalidades
-- 🛒 Catálogo con imágenes, nombre y enlace a Mercado Libre
-- 🔍 Búsqueda por nombre + filtros por categoría y precio
+## ✨ Funcionalidades
+
+- 🔍 Búsqueda en tiempo real por nombre
+- 🏷️ Filtros por categoría y orden por precio o recientes
 - ⭐ Guardado de favoritos (localStorage)
-- 🌙 Modo oscuro
-- 🆕 Etiqueta "Recién agregado" para productos nuevos
-- 📡 Conexión a Google Sheets vía Apps Script
+- 🌙 Modo oscuro con toggle moderno
+- 🆕 Etiqueta “Recién Agregado” (productos nuevos en 3 días)
+- 🔁 Sincronización con Google Sheets vía Apps Script
+- 📱 Diseño responsive adaptable a móviles
 
----
+## 📡 Sitio en vivo
 
-## Autor
-[CavernaRetro](https://github.com/CavernaRetro)
+👉 [https://cavernaretro.github.io/catalago-ml/](https://cavernaretro.github.io/catalago-ml/)
+
+## 👤 Autor
+
+**La Caverna Retro**  
+[https://github.com/CavernaRetro](https://github.com/CavernaRetro)
