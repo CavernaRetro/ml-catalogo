@@ -2,7 +2,15 @@ let productos = [];
 let productosGuardados = [];
 
 function cargarProductosDesdeSheet(mostrarDirecto = true) {
-  fetch("https://script.google.com/macros/s/AKfycbyn6ohcozftWPxtWBt_9eWSVtTYlQXAoDcHLlfAUflG_T-1R2NtSrSDP7pH9RGPYGeftw/exec") // <-- tu URL real
+  const catalog = document.getElementById("catalog");
+  const loader = document.getElementById("catalogLoader");
+
+  if (mostrarDirecto) {
+    loader.style.display = "block";
+    catalog.style.display = "none";
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbyn6ohcozftWPxtWBt_9eWSVtTYlQXAoDcHLlfAUflG_T-1R2NtSrSDP7pH9RGPYGeftw/exec")
     .then(res => res.json())
     .then(data => {
       if (mostrarDirecto) {
@@ -16,8 +24,17 @@ function cargarProductosDesdeSheet(mostrarDirecto = true) {
         }
       }
     })
-    .catch(err => console.error("Error al cargar productos:", err));
+    .catch(err => {
+      console.error("Error al cargar productos:", err);
+    })
+    .finally(() => {
+      if (mostrarDirecto) {
+        loader.style.display = "none";
+        catalog.style.display = "grid";
+      }
+    });
 }
+
 
 // Primera carga
 cargarProductosDesdeSheet(true);
