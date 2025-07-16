@@ -1,6 +1,6 @@
 # 🛒 Catálogo Mercado Libre – La Caverna Retro
 
-Este sitio muestra un catálogo de productos conectados a Google Sheets y enlazados a publicaciones de Mercado Libre.
+Este sitio muestra un catálogo de jugutes, videojuegos y promocionales actuales y vintage conectados a Google Sheets y enlazados a publicaciones de Mercado Libre.
 
 ## ✨ Funcionalidades
 
