@@ -14,7 +14,7 @@ Este sitio muestra un catálogo de productos conectados a Google Sheets y enlaza
 
 ## 📡 Sitio en vivo
 
-👉 [https://cavernaretro.github.io/catalago-ml/](https://cavernaretro.github.io/catalago-ml/)
+👉 [https://cavernaretro.github.io/ml-catalago/](https://cavernaretro.github.io/ml-catalago/)
 
 ## 👤 Autor
 
