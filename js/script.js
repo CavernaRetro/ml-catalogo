@@ -160,8 +160,15 @@ function renderPagination(totalItems) {
     btn.addEventListener('click', () => {
       currentPage = i;
       updateCatalog();
-      scrollToTop(); // ✅ NUEVO: hace scroll al inicio en móvil/PC
-    });
+
+      const controles = document.querySelector('.catalog-controls');
+      if (controles) {
+        const headerOffset = 80; // ⚙️ Podés ajustar a 60, 100, etc.
+        const offset = controles.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+  }
+});
+
     pagination.appendChild(btn);
   }
 
