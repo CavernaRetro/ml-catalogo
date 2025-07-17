@@ -57,6 +57,45 @@ nav a {
   font-weight: bold;
 }
 
+/* Imagen Pantalla Completa */
+.hero-portada {
+  height: 100vh;
+  width: 100%;
+  background-image: url('/img/hero.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* EFECTO scroll */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  color: white;
+}
+
+.hero-portada::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.hero-texto {
+  font-size: 1.5rem;
+  z-index: 1;
+  position: relative;
+  padding: 0 20px;
+}
+
+.contenido-principal {
+  background: white;
+  padding: 80px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+
 /* ✅ NUEVO: enlaces visibles en modo oscuro */
 body.dark nav a {
   color: #f0f0f0;
