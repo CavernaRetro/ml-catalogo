@@ -81,14 +81,25 @@ function esFavorito(nombre) {
   return favoritos.some(p => p.nombre === nombre);
 }
 
+//Buscar palabras sin acento
+function normalizarTexto(texto) {
+  return texto
+    .normalize("NFD") // descompone acentos
+    .replace(/[\u0300-\u036f]/g, "") // remueve los acentos
+    .toLowerCase(); // pasa todo a minúsculas
+}
+
 // Renderizado
 function filterAndSort() {
   let baseData = mostrandoFavoritos
     ? JSON.parse(localStorage.getItem("favoritos")) || []
     : productos;
 
+  const textoBusqueda = normalizarTexto(searchInput.value);
+
   let filtered = baseData.filter(p => {
-    const matchSearch = p.nombre.toLowerCase().includes(searchInput.value.toLowerCase());
+    const nombreNormalizado = normalizarTexto(p.nombre);
+    const matchSearch = nombreNormalizado.includes(textoBusqueda);
     const matchCategory = categorySelect.value === 'all' || p.categoria === categorySelect.value;
     return matchSearch && matchCategory;
   });
@@ -172,6 +183,7 @@ searchInput.addEventListener('input', () => {
   currentPage = 1;
   updateCatalog();
 });
+
 // Inicio Agregar X al buscador de articulos
 const clearSearchBtn = document.getElementById("clearSearch");
 
@@ -220,13 +232,13 @@ document.getElementById('verTodoBtn').addEventListener('click', (e) => {
 });
 
 // Banner rotativo
-const bannerImages = document.querySelectorAll('.banner img');
-let currentBanner = 0;
-setInterval(() => {
-  bannerImages[currentBanner].classList.remove('active');
-  currentBanner = (currentBanner + 1) % bannerImages.length;
-  bannerImages[currentBanner].classList.add('active');
-}, 3000);
+//const bannerImages = document.querySelectorAll('.banner img');
+//let currentBanner = 0;
+//setInterval(() => {
+//  bannerImages[currentBanner].classList.remove('active');
+//  currentBanner = (currentBanner + 1) % bannerImages.length;
+//  bannerImages[currentBanner].classList.add('active');
+//}, 3000);
 
 // Sticky Header
 window.addEventListener('scroll', () => {
@@ -270,3 +282,5 @@ function scrollToTop() {
   const scrollEl = document.scrollingElement || document.documentElement || document.body;
   scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+//Imagen a Pantalla Completa
