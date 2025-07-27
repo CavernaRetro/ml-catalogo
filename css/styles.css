@@ -61,7 +61,7 @@ nav a {
 .hero-portada {
   height: 100vh;
   width: 100%;
-  background-image: url('/ml-catalogo/img/hero.webp');
+  background-image: url('/img/hero.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* EFECTO scroll */
