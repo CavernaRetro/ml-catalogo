@@ -17,19 +17,37 @@ body {
   color: var(--text-color);
 }
 
-header {
+/* 🔔 Barra superior informativa */
+.top-bar {
   position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffcc00;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5em 1em;
+  z-index: 1001;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; /* ← alineado a la izquierda */
+  gap: 1em;
+  padding: 0 20px;
+  position: fixed;
+  top: 1.8em;
   width: 100%;
   height: var(--header-height);
   background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
   z-index: 999;
   transition: background 0.3s ease;
 }
+
 
 header.solid {
   background: #ffffff;
@@ -38,6 +56,12 @@ header.solid {
 
 header span {
   font-weight: bold;
+  color: #727272;
+}
+
+/* Color en modo oscuro */
+body.dark header span {
+  color: #f0f0f0;
 }
 
 .logo {
@@ -61,7 +85,7 @@ nav a {
 .hero-portada {
   height: 100vh;
   width: 100%;
-  background-image: url('/img/hero.webp');
+  background-image: url('ml-catalogo/img/hero.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* EFECTO scroll */
@@ -400,6 +424,152 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
+}
+
+/* Botón hamburguesa */
+.hamburger {
+  display: none;
+  font-size: 3rem;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Menú móvil lateral */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 240px;
+  height: 100vh;
+  background: #fff;
+  padding: 2em 1.5em;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+  z-index: 1500;
+  transition: right 0.3s ease;
+}
+
+/* Color en modo oscuro */
+body.dark .mobile-menu {
+  background: #000000;
+}
+
+.mobile-menu.show {
+  right: 0;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 2em;
+}
+
+.mobile-menu ul li {
+  margin-bottom: 1em;
+}
+
+.mobile-menu ul li a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Color en modo oscuro */
+body.dark .mobile-menu ul li a {
+  color: #ffffff;
+}
+
+.close-mobile-menu {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  background: none;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  color: #000;
+}
+
+/* Color en modo oscuro */
+body.dark .close-mobile-menu {
+  color: #ffffff;
+}
+
+/* Redes sociales en barra menu amburguesa */
+.mobile-social {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  padding: 1.5em 0;
+}
+
+.mobile-social a {
+  font-size: 1.6em;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mobile-social a:hover {
+  color: #ff9900;
+}
+
+body.dark .mobile-social a {
+  color: #f0f0f0;
+}
+
+body.dark .mobile-social a:hover {
+  color: #ffcc33;
+}
+
+/* Color del botón hamburguesa en modo claro */
+.hamburger {
+  color: #727272;
+  background: none;
+  border: none;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+/* Color en modo oscuro */
+body.dark .hamburger {
+  color: #f0f0f0;
+}
+
+/* boton volver a inicio desde favoritos */
+.btn-volver {
+  margin-top: 1em;
+  padding: 0.6em 1.2em;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+}
+
+.btn-volver:hover {
+  background-color: #ffdd33;
+}
+
+body.dark .btn-volver {
+  background-color: #ffaa00;
+  color: #111;
+}
+
+/* Mostrar solo en móvil */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+  }
 }
 
 /* Responsive */
