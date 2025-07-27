@@ -429,7 +429,7 @@ input:checked + .slider:before {
 /* Botón hamburguesa */
 .hamburger {
   display: none;
-  font-size: 3rem;
+  font-size: 2.2rem;
   background: none;
   border: none;
   color: #ffffff;
