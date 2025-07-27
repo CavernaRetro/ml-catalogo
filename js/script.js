@@ -122,11 +122,38 @@ function renderCatalogPage(data, page) {
   const pageItems = data.slice(start, end);
 
   if (pageItems.length === 0) {
-    catalog.innerHTML = "<p style='grid-column: span 5; text-align: center;'>No hay artículos para mostrar.</p>";
     pagination.innerHTML = '';
+
+    if (mostrandoFavoritos) {
+      catalog.innerHTML = `
+        <div style="grid-column: span 5; text-align: center;">
+          <p>No hay favoritos guardados.</p>
+          <button id="volverInicioBtn" class="btn-volver">Volver al inicio</button>
+        </div>
+      `;
+
+      // Botón para volver al inicio
+      const volverBtn = document.getElementById("volverInicioBtn");
+      if (volverBtn) {
+        volverBtn.addEventListener("click", () => {
+          mostrandoFavoritos = false;
+          searchInput.value = "";
+          categorySelect.value = "all";
+          currentPage = 1;
+          const data = filterAndSort();
+          renderCatalogPage(data, currentPage);
+          //setupPagination(data);
+        });
+      }
+
+    } else {
+      catalog.innerHTML = "<p style='grid-column: span 5; text-align: center;'>No hay artículos para mostrar.</p>";
+    }
+
     return;
   }
 
+  // Renderizar productos
   pageItems.forEach(p => {
     const item = document.createElement('div');
     item.className = 'item';
@@ -140,14 +167,37 @@ function renderCatalogPage(data, page) {
       <img src="${p.imagen}" alt="${p.nombre}">
       <h4>${p.nombre}</h4>
       <p>$${p.precio}</p>
-      <a href="${p.enlace}" target="_blank">Ver en Mercado Libre</a><br>
+      <a href="${p.enlace}" target="_blank">Ver en <br>Mercado Libre</a><br>
       <button onclick='toggleFavorito(${JSON.stringify(p)})'>
         ${esFavorito(p.nombre) ? "⭐ Favorito" : "☆ Agregar a Favoritos"}
       </button>
     `;
     catalog.appendChild(item);
   });
+
+  // ✅ Si estamos viendo favoritos, añadir botón al final también
+  if (mostrandoFavoritos) {
+    const volverDiv = document.createElement("div");
+    volverDiv.style.gridColumn = "span 5";
+    volverDiv.style.textAlign = "center";
+    volverDiv.innerHTML = `<button id="volverInicioBtn" class="btn-volver">Volver al inicio</button>`;
+    catalog.appendChild(volverDiv);
+
+    const volverBtn = document.getElementById("volverInicioBtn");
+    if (volverBtn) {
+      volverBtn.addEventListener("click", () => {
+        mostrandoFavoritos = false;
+        searchInput.value = "";
+        categorySelect.value = "all";
+        currentPage = 1;
+        const data = filterAndSort();
+        renderCatalogPage(data, currentPage);
+        setupPagination(data);
+      });
+    }
+  }
 }
+
 
 function renderPagination(totalItems) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
@@ -278,6 +328,31 @@ darkToggle.addEventListener('change', () => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+if (hamburgerBtn && mobileMenu && closeMobileMenu) {
+  hamburgerBtn.addEventListener('click', () => {
+    mobileMenu.classList.add('show');
+  });
+
+  closeMobileMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('show');
+  });
+
+  // Redirige clics del menú móvil a los botones originales
+  document.getElementById('verTodoBtnMobile').addEventListener('click', () => {
+    document.getElementById('verTodoBtn').click();
+    mobileMenu.classList.remove('show');
+  });
+
+  document.getElementById('verFavoritosBtnMobile').addEventListener('click', () => {
+    document.getElementById('verFavoritosBtn').click();
+    mobileMenu.classList.remove('show');
+  });
+}
+
   const modoOscuroGuardado = localStorage.getItem("modoOscuro") === "true";
   setDarkMode(modoOscuroGuardado);
   updateCatalog();
