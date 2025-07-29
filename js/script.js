@@ -199,7 +199,7 @@ function renderCatalogPage(data, page) {
 
 function renderPagination(totalItems) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  const maxVisibleButtons = 5;
+  const maxVisibleButtons = 3;
   const pagination = document.getElementById('pagination');
   pagination.innerHTML = '';
 
