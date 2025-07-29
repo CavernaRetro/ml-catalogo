@@ -70,7 +70,7 @@ body.dark header span {
 }
 
 .logo img {
-  height: 40px;
+  height: 50px;
   margin-right: 10px;
 }
 
@@ -85,7 +85,7 @@ nav a {
 .hero-portada {
   height: 100vh;
   width: 100%;
-  background-image: url('/ml-catalogo/img/hero.webp');
+  background-image: url('/img/hero.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* EFECTO scroll */
@@ -498,6 +498,25 @@ body.dark .close-mobile-menu {
   color: #ffffff;
 }
 
+/* mobile con Overley transparente */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Oscuro semitransparente */
+  z-index: 1400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* Redes sociales en barra menu amburguesa */
 .mobile-social {
   margin-top: auto;
@@ -600,7 +619,7 @@ body.dark .btn-volver {
 
 @media (max-width: 480px) {
   .catalog {
-    grid-template-columns: 1repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   .search-wrapper {
   display: flex;
