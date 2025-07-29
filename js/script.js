@@ -35,7 +35,6 @@ function cargarProductosDesdeSheet(mostrarDirecto = true) {
     });
 }
 
-
 // Primera carga
 cargarProductosDesdeSheet(true);
 
@@ -126,13 +125,12 @@ function renderCatalogPage(data, page) {
 
     if (mostrandoFavoritos) {
       catalog.innerHTML = `
-        <div style="grid-column: span 5; text-align: center;">
+        <div style="grid-column: 1 / -1; text-align: center;">
           <p>No hay favoritos guardados.</p>
           <button id="volverInicioBtn" class="btn-volver">Volver al inicio</button>
         </div>
       `;
 
-      // Botón para volver al inicio
       const volverBtn = document.getElementById("volverInicioBtn");
       if (volverBtn) {
         volverBtn.addEventListener("click", () => {
@@ -140,14 +138,14 @@ function renderCatalogPage(data, page) {
           searchInput.value = "";
           categorySelect.value = "all";
           currentPage = 1;
-          const data = filterAndSort();
-          renderCatalogPage(data, currentPage);
-          //setupPagination(data);
+          const filtered = filterAndSort();
+          renderCatalogPage(filtered, currentPage);
+          renderPagination(filtered.length);
         });
       }
 
     } else {
-      catalog.innerHTML = "<p style='grid-column: span 5; text-align: center;'>No hay artículos para mostrar.</p>";
+      catalog.innerHTML = "<p style='grid-column: 1 / -1; text-align: center;'>No hay artículos para mostrar.</p>";
     }
 
     return;
@@ -166,7 +164,6 @@ function renderCatalogPage(data, page) {
       ${esNuevo ? '<span class="badge-new">Recién Agregado</span>' : ''}
       <img src="${p.imagen}" alt="${p.nombre}">
       <h4>${p.nombre}</h4>
-      <p>$${p.precio}</p>
       <a href="${p.enlace}" target="_blank">Ver en <br>Mercado Libre</a><br>
       <button onclick='toggleFavorito(${JSON.stringify(p)})'>
         ${esFavorito(p.nombre) ? "⭐ Favorito" : "☆ Agregar a Favoritos"}
@@ -175,10 +172,10 @@ function renderCatalogPage(data, page) {
     catalog.appendChild(item);
   });
 
-  // ✅ Si estamos viendo favoritos, añadir botón al final también
+  // Botón volver al final de favoritos
   if (mostrandoFavoritos) {
     const volverDiv = document.createElement("div");
-    volverDiv.style.gridColumn = "span 5";
+    volverDiv.style.gridColumn = "1 / -1";
     volverDiv.style.textAlign = "center";
     volverDiv.innerHTML = `<button id="volverInicioBtn" class="btn-volver">Volver al inicio</button>`;
     catalog.appendChild(volverDiv);
@@ -190,9 +187,10 @@ function renderCatalogPage(data, page) {
         searchInput.value = "";
         categorySelect.value = "all";
         currentPage = 1;
-        const data = filterAndSort();
-        renderCatalogPage(data, currentPage);
-        setupPagination(data);
+        const filtered = filterAndSort();
+        renderCatalogPage(filtered, currentPage);
+        renderPagination(filtered.length);
+        scrollToTop(); // ← ✅ NUEVO: sube la página al inicio
       });
     }
   }
@@ -201,34 +199,51 @@ function renderCatalogPage(data, page) {
 
 function renderPagination(totalItems) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const maxVisibleButtons = 5;
+  const pagination = document.getElementById('pagination');
   pagination.innerHTML = '';
 
-  for (let i = 1; i <= totalPages; i++) {
+  if (totalPages <= 1) return;
+
+  const createButton = (label, page, disabled = false, active = false) => {
     const btn = document.createElement('button');
-    btn.textContent = i;
-    btn.className = i === currentPage ? 'active' : '';
+    btn.textContent = label;
+    if (disabled) btn.disabled = true;
+    if (active) btn.classList.add('active');
     btn.addEventListener('click', () => {
-      currentPage = i;
+      currentPage = page;
       updateCatalog();
 
       const controles = document.querySelector('.catalog-controls');
       if (controles) {
-        const headerOffset = 80; // ⚙️ Podés ajustar a 60, 100, etc.
+        const headerOffset = 80;
         const offset = controles.getBoundingClientRect().top + window.scrollY - headerOffset;
         window.scrollTo({ top: offset, behavior: 'smooth' });
-  }
-});
+      }
+    });
+    return btn;
+  };
 
-    pagination.appendChild(btn);
+  const startPage = Math.max(1, currentPage - Math.floor(maxVisibleButtons / 2));
+  const endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
+
+  // ⏮ Primera página
+  if (currentPage > 1) {
+    pagination.appendChild(createButton('⏮', 1));
+    pagination.appendChild(createButton('«', currentPage - 1));
   }
 
-  if (mostrandoFavoritos && totalItems > 0) {
-    const label = document.createElement('p');
-    label.style.textAlign = 'center';
-    label.textContent = "Mostrando favoritos ⭐";
-    pagination.prepend(label);
+  for (let i = startPage; i <= endPage; i++) {
+    pagination.appendChild(createButton(i, i, false, i === currentPage));
+  }
+
+  // ⏭ Última página
+  if (currentPage < totalPages) {
+    pagination.appendChild(createButton('»', currentPage + 1));
+    pagination.appendChild(createButton('⏭', totalPages));
   }
 }
+
 
 function updateCatalog() {
   const filtered = filterAndSort();
@@ -327,6 +342,7 @@ darkToggle.addEventListener('change', () => {
   setDarkMode(darkToggle.checked);
 });
 
+// Menu Hamburguesa 
 window.addEventListener('DOMContentLoaded', () => {
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const mobileMenu = document.getElementById('mobileMenu');
@@ -351,6 +367,38 @@ if (hamburgerBtn && mobileMenu && closeMobileMenu) {
     document.getElementById('verFavoritosBtn').click();
     mobileMenu.classList.remove('show');
   });
+
+  // Overley con transparencia
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+if (hamburgerBtn && mobileMenu && closeMobileMenu && mobileOverlay) {
+  hamburgerBtn.addEventListener('click', () => {
+    mobileMenu.classList.add('show');
+    mobileOverlay.classList.add('show');
+  });
+
+  closeMobileMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('show');
+    mobileOverlay.classList.remove('show');
+  });
+
+  mobileOverlay.addEventListener('click', () => {
+    mobileMenu.classList.remove('show');
+    mobileOverlay.classList.remove('show');
+  });
+
+  document.getElementById('verTodoBtnMobile').addEventListener('click', () => {
+    document.getElementById('verTodoBtn').click();
+    mobileMenu.classList.remove('show');
+    mobileOverlay.classList.remove('show');
+  });
+
+  document.getElementById('verFavoritosBtnMobile').addEventListener('click', () => {
+    document.getElementById('verFavoritosBtn').click();
+    mobileMenu.classList.remove('show');
+    mobileOverlay.classList.remove('show');
+  });
+}
 }
 
   const modoOscuroGuardado = localStorage.getItem("modoOscuro") === "true";
