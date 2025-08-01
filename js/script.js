@@ -162,7 +162,7 @@ function renderCatalogPage(data, page) {
 
     item.innerHTML = `
       ${esNuevo ? '<span class="badge-new">Recién Agregado</span>' : ''}
-      <img src="${p.imagen}" alt="${p.nombre}">
+      <img src="img/articulos/${p.imagen}" alt="${p.nombre}">
       <h4>${p.nombre}</h4>
       <a href="${p.enlace}" target="_blank">Ver en <br>Mercado Libre</a><br>
       <button onclick='toggleFavorito(${JSON.stringify(p)})'>
