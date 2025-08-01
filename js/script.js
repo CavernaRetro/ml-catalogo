@@ -68,7 +68,10 @@ function toggleFavorito(producto) {
   if (index >= 0) {
     favoritos.splice(index, 1);
   } else {
-    favoritos.push(producto);
+    const copia = { ...producto };
+    // Normaliza la ruta de la imagen (guarda solo el nombre del archivo)
+    copia.imagen = copia.imagen.replace(/^.*[\\/]/, '');
+    favoritos.push(copia);
   }
 
   localStorage.setItem("favoritos", JSON.stringify(favoritos));
@@ -162,8 +165,9 @@ function renderCatalogPage(data, page) {
 
     item.innerHTML = `
       ${esNuevo ? '<span class="badge-new">Recién Agregado</span>' : ''}
-      <img src="img/articulos/${p.imagen}" alt="${p.nombre}">
+      <img src="${p.imagen.includes('img/articulos/') ? p.imagen : 'img/articulos/' + p.imagen}" alt="${p.nombre}">
       <h4>${p.nombre}</h4>
+      <h4>$${p.precio}</h4>
       <a href="${p.enlace}" target="_blank">Ver en <br>Mercado Libre</a><br>
       <button onclick='toggleFavorito(${JSON.stringify(p)})'>
         ${esFavorito(p.nombre) ? "⭐ Favorito" : "☆ Agregar a Favoritos"}
