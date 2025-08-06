@@ -85,7 +85,7 @@ nav a {
 .hero-portada {
   height: 100vh;
   width: 100%;
-  background-image: url('/ml-catalogo/img/hero.webp');
+  background-image: url('/img/hero.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* EFECTO scroll */
@@ -291,8 +291,8 @@ body.dark nav a:hover {
 }
 
 .item a {
-  background: var(--primary-color);
-  color: white;
+  background: #ffe600;
+  color: black;
   padding: 8px 12px;
   text-decoration: none;
   border-radius: 5px;
@@ -358,7 +358,7 @@ body.dark header.solid {
 }
 
 body.dark .item a {
-  background: #66ccff;
+  background: #ffe600;
 }
 
 /* Toggle switch */
@@ -589,6 +589,18 @@ body.dark .btn-volver {
   .nav-links {
     display: none;
   }
+}
+
+/* 3 Meses sin intereses */
+.promo-cuotas {
+  color: #28a745; /* Verde tipo éxito */
+  font-weight: bold;
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+body.dark .promo-cuotas {
+  color: #66ff99;
 }
 
 /* Responsive */
