@@ -144,6 +144,7 @@ function renderCatalogPage(data, page) {
           const filtered = filterAndSort();
           renderCatalogPage(filtered, currentPage);
           renderPagination(filtered.length);
+          scrollToTop(); // ← ✅ NUEVO: sube la página al inicio
         });
       }
 
@@ -168,6 +169,7 @@ function renderCatalogPage(data, page) {
       <img src="${p.imagen.includes('img/articulos/') ? p.imagen : 'img/articulos/' + p.imagen}" alt="${p.nombre}">
       <h4>${p.nombre}</h4>
       <h4>$${p.precio}</h4>
+      <p class="promo-cuotas">3 Meses sin Intereses</p>
       <a href="${p.enlace}" target="_blank">Ver en <br>Mercado Libre</a><br>
       <button onclick='toggleFavorito(${JSON.stringify(p)})'>
         ${esFavorito(p.nombre) ? "⭐ Favorito" : "☆ Agregar a Favoritos"}
