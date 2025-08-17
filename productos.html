@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- SEO básico -->
+  <meta name="description" content="Catálogo online de figuras de acción en venta a través de Mercado Libre. Encuentra piezas únicas, coleccionables y ofertas limitadas.">
+  <meta name="keywords" content="figuras de acción, juguetes, coleccionables, catálogo, Mercado Libre, Marvel, DC, Spiderman, Toy Biz, venta online">
+  <meta name="author" content="La Caverna Retro">
+
+  <!-- SEO social (Open Graph) -->
+  <meta property="og:title" id="og-title" content="Juguetes, Videojuegos y coleccionables vintage & Actuales" />
+  <meta property="og:description" id="og-description" content="Explora nuestros artículos disponibles en Mercado Libre." />
+  <meta property="og:image" id="og-image" content="/assets/preview.jpg" />
+  <meta property="og:url" id="og-url" content="https://cavernaretro.github.io/catalago-ml" />
+  <meta property="og:type" content="website" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Catálogo de Juguetes, Videojuegos y coleccionables vintage & Actuales | Venta en Mercado Libre</title>
+  <link rel="icon" href="assets/logotransparente300x300.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+<body>
+
+  <!-- 🔔 Barra informativa superior -->
+  <div class="top-bar">
+    <p>📦 Subimos nuevos artículos todos los viernes 📦</p>
+  </div>
+
+  <!-- HEADER -->
+  <header id="header">
+    <!-- ☰ Hamburguesa (solo móvil) -->
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menú">&#9776;</button>
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/logotransparente.png" alt="Logo" />
+      <span>La Caverna Retro</span>
+    </div>
+
+    <!-- Menú desktop -->
+    <nav class="nav-links">
+      <a href="#" id="verTodoBtn">Inicio</a>
+      <a href="#" id="verFavoritosBtn">Favoritos</a>
+    </nav>
+
+    <!-- Modo oscuro -->
+    <div class="dark-toggle">
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </header>
+
+  <!-- 📸 Banner fijo (solo uno) -->
+  <section class="producto-banner">
+    <img src="img/hero.webp" alt="Banner del producto">
+  </section> 
+
+  <!-- Menú móvil lateral -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-mobile-menu" id="closeMobileMenu" aria-label="Cerrar menú">&times;</button>
+    <ul>
+      <li><a href="#" id="verTodoBtnMobile">Inicio</a></li>
+      <li><a href="#" id="verFavoritosBtnMobile">Favoritos</a></li>
+    </ul>
+    <div class="mobile-social">
+      <a href="https://www.instagram.com/lacavernaretro" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.tiktok.com/@la.caverna.retro" target="_blank" aria-label="TikTok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://wa.me/522295259337" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Overlay para menú móvil -->
+  <div id="mobileOverlay" class="mobile-overlay"></div>
+
+  <!-- Contenedor de producto -->
+  <section class="producto-container">
+    <div class="producto-imagen">
+      <img id="imagenPrincipal" src="" alt="Producto">
+    <!--  <div class="miniaturas" id="miniaturas"></div> -->
+    </div>
+    <div class="producto-info">
+      <h2 id="productoNombre"></h2>
+      <p class="precio" id="productoPrecio"></p>
+      <p class="meses">3 Meses sin Intereses</p>
+      <a class="btn-ml" id="productoEnlace" target="_blank">Ver en Mercado Libre</a>
+      <p class="productoDescripcion" id="productoDescripcion"></p>
+    </div>
+  </section>
+
+  <!-- Productos similares -->
+  <section class="similares">
+    <h3>Productos similares</h3>
+    <div class="similares-grid" id="similaresGrid"></div>
+  </section>
+
+    <!-- Favoritos (inicialmente ocultos) -->
+  <section id="favoritosSection" style="display: none; padding: 20px;">
+    <h3>Mis Favoritos</h3>
+    <div id="favoritosGrid" class="similares-grid"></div>
+    <button id="volverProductoBtn" class="btn-volver">Volver al producto</button>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
