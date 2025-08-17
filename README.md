@@ -8,7 +8,6 @@ Este sitio muestra un catálogo de jugutes, videojuegos y promocionales actuales
 - 🏷️ Filtros por categoría y orden por precio o recientes
 - ⭐ Guardado de favoritos (localStorage)
 - 🌙 Modo oscuro con toggle moderno
-- 🆕 Etiqueta “Recién Agregado” (productos nuevos en 3 días)
 - 🔁 Sincronización con Google Sheets vía Apps Script
 - 📱 Diseño responsive adaptable a móviles
 
