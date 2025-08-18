@@ -35,7 +35,7 @@
 
     <!-- Logo -->
     <div class="logo">
-      <img src="assets/logotransparente.png" alt="Logo" />
+      <a href="/index.html"><img src="assets/logotransparente.png" alt="Logo" /></a>
       <span>La Caverna Retro</span>
     </div>
 
@@ -82,6 +82,12 @@
   <!-- Overlay para menú móvil -->
   <div id="mobileOverlay" class="mobile-overlay"></div>
 
+  <!-- Animación de Carga de Productos -->
+  <div id="productoLoader" class="catalog-loader">
+    <div class="spinner"></div>
+    <p>Cargando producto...</p>
+  </div>
+
   <!-- Contenedor de producto -->
   <section class="producto-container">
     <div class="producto-imagen">
@@ -106,7 +112,7 @@
     <!-- Favoritos (inicialmente ocultos) -->
   <section id="favoritosSection" style="display: none; padding: 20px;">
     <h3>Mis Favoritos</h3>
-    <div id="favoritosGrid" class="similares-grid"></div>
+    <div id="favoritosGrid" class="catalog"></div>
     <button id="volverProductoBtn" class="btn-volver">Volver al producto</button>
   </section>
 
