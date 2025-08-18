@@ -153,8 +153,8 @@ function mostrarFavoritos() {
           btnFav.textContent = "💔 Quitar de Favoritos";
           btnFav.addEventListener("click", (e) => {
             e.stopPropagation();
-            toggleFavorito(p);        // usa tu lógica ya existente
-            mostrarFavoritos();       // re-render para actualizar la lista
+            toggleFavorito(p);
+            mostrarFavoritos(); // re-render
           });
 
           card.append(img, pName, pPrice, btnFav);
@@ -162,13 +162,18 @@ function mostrarFavoritos() {
         });
       }
 
-      // 🔹 Botón regresar al inicio (siempre visible)
+      // 🔹 Eliminar botón previo si ya existía (evita duplicados)
+      document.getElementById("btnRegresarInicio")?.remove();
+
+      // 🔹 Crear botón regresar al inicio (fuera del grid)
       const btnInicio = document.createElement("button");
+      btnInicio.id = "btnRegresarInicio";
       btnInicio.className = "btn-volver";
       btnInicio.style.marginTop = "20px";
-      btnInicio.textContent = "🏠 Regresar al inicio";
+      btnInicio.textContent = "Regresar al inicio";
       btnInicio.addEventListener("click", irAlInicio);
-      grid.appendChild(btnInicio);
+
+      grid.insertAdjacentElement("afterend", btnInicio);
     }
 
     if (pagination) pagination.style.display = "none";
@@ -221,8 +226,14 @@ function mostrarFavoritos() {
   }
 
   if (btnVolverProd) btnVolverProd.onclick = volverAlProducto;
-  if (btnVolverInicio) btnVolverInicio.onclick = irAlInicio;
+
+  // 🔹 Mover el botón "Regresar al inicio" debajo del grid (si existe en esta vista)
+  if (btnVolverInicio) {
+    btnVolverInicio.onclick = irAlInicio;
+    grid.insertAdjacentElement("afterend", btnVolverInicio);
+  }
 }
+
 
 /* Ocultar */
 function ocultarControlesBusqueda(ocultar) {
@@ -475,7 +486,7 @@ function buildPagination(totalPages) {
   paginationEl.appendChild(makeBtn("«", Math.max(1, page - 1), page === 1));
 
   // Páginas visibles (máx 4)
-  const maxVisible = 4;
+  const maxVisible = 3;
   let start = Math.max(1, page - Math.floor(maxVisible / 2));
   let end = start + maxVisible - 1;
   if (end > totalPages) {
@@ -536,17 +547,30 @@ function initProductoPage() {
   const enlaceEl = document.getElementById("productoEnlace");
   const descripcionEl = document.getElementById("productoDescripcion");
   const imagenPrincipalEl = document.getElementById("imagenPrincipal");
-  const miniaturasEl = document.getElementById("miniaturas");
   const similaresGridEl = document.getElementById("similaresGrid");
   const productoBanner = document.querySelector(".producto-banner");
+
+  // 🔹 Loader + contenedor
+  const loader = document.getElementById("productoLoader");
+  const contenedor = document.querySelector(".producto-container");
 
   if (!productId) {
     if (nombreEl) nombreEl.textContent = "No se especificó un producto (usa ?id=a0001)";
     return;
   }
 
+  // Mostrar loader y ocultar contenido
+  if (loader) loader.style.display = "block";
+  if (contenedor) contenedor.style.display = "none";
+
   obtenerDatos().then(data => {
     const producto = data.find(p => (p.id || p.ID).toString().toLowerCase() === productId.toLowerCase());
+
+    // Ocultar loader y mostrar contenido
+    if (loader) loader.style.display = "none";
+    if (contenedor) contenedor.style.removeProperty("display");
+
+
     if (!producto) {
       if (nombreEl) nombreEl.textContent = `Producto ${productId} no encontrado.`;
       return;
@@ -569,67 +593,65 @@ function initProductoPage() {
       imagenPrincipalEl.alt = producto.nombre || "Producto";
     }
 
-if (similaresGridEl && producto.categoria) {
-  const candidatos = data.filter(p =>
-    (p.categoria || "").toLowerCase() === (producto.categoria || "").toLowerCase() &&
-    (p.id || p.ID) !== (producto.id || producto.ID)
-  );
-  similaresGridEl.innerHTML = "";
-  candidatos.sort(() => Math.random() - 0.5);
-  candidatos.slice(0, 4).forEach(sim => {
-    const card = document.createElement("div");
-    card.className = "item";
+    // 🔹 Similares
+    if (similaresGridEl && producto.categoria) {
+      const candidatos = data.filter(p =>
+        (p.categoria || "").toLowerCase() === (producto.categoria || "").toLowerCase() &&
+        (p.id || p.ID) !== (producto.id || producto.ID)
+      );
 
-    // Enlace solo en la imagen
-    const a = document.createElement("a");
-    a.href = `productos.html?id=${encodeURIComponent(sim.id || sim.ID)}`;
+      similaresGridEl.innerHTML = "";
+      candidatos.sort(() => Math.random() - 0.5);
+      candidatos.slice(0, 4).forEach(sim => {
+        const card = document.createElement("div");
+        card.className = "item";
 
-    const img = document.createElement("img");
-    img.src = imgPath(sim.imagen1 || sim.imagen || "");
-    img.alt = sim.nombre || "";
-    a.appendChild(img);
+        // Enlace solo en la imagen
+        const a = document.createElement("a");
+        a.href = `productos.html?id=${encodeURIComponent(sim.id || sim.ID)}`;
 
-    const pName = document.createElement("p");
-    pName.textContent = sim.nombre || "";
+        const img = document.createElement("img");
+        img.src = imgPath(sim.imagen1 || sim.imagen || "");
+        img.alt = sim.nombre || "";
+        a.appendChild(img);
 
-    // 🔁 Botón favoritos (toggle local)
-    const btnFav = document.createElement("button");
-    const isFav = esFavorito(sim.id || sim.ID);
-    btnFav.textContent = isFav ? "❤️ Favorito" : "❤️ Agregar a Favoritos";
+        const pName = document.createElement("p");
+        pName.textContent = sim.nombre || "";
 
-    btnFav.addEventListener("click", (e) => {
-      e.preventDefault();   // evita navegar por el <a>
-      e.stopPropagation();
+        // 🔁 Botón favoritos (toggle)
+        const btnFav = document.createElement("button");
+        const isFav = esFavorito(sim.id || sim.ID);
+        btnFav.textContent = isFav ? "❤️ Favorito" : "❤️ Agregar a Favoritos";
 
-      let favs = getFavoritos();
-      const pid = sim.id || sim.ID;
-      const idx = favs.findIndex(f => (f.id || f.ID) === pid);
+        btnFav.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
 
-      if (idx >= 0) {
-        // Quitar de favoritos
-        favs.splice(idx, 1);
-        btnFav.textContent = "❤️ Agregar a Favoritos";
-      } else {
-        // Agregar a favoritos
-        favs.push({
-          id: pid,
-          nombre: sim.nombre,
-          precio: sim.precio,
-          imagen: sim.imagen1 || sim.imagen
+          let favs = getFavoritos();
+          const pid = sim.id || sim.ID;
+          const idx = favs.findIndex(f => (f.id || f.ID) === pid);
+
+          if (idx >= 0) {
+            favs.splice(idx, 1);
+            btnFav.textContent = "❤️ Agregar a Favoritos";
+          } else {
+            favs.push({
+              id: pid,
+              nombre: sim.nombre,
+              precio: sim.precio,
+              imagen: sim.imagen1 || sim.imagen
+            });
+            btnFav.textContent = "❤️ Favorito";
+          }
+          localStorage.setItem("favoritos", JSON.stringify(favs));
         });
-        btnFav.textContent = "❤️ Favorito";
-      }
-      localStorage.setItem("favoritos", JSON.stringify(favs));
-    });
 
-    // 👇 Sin precio (no creamos pPrice)
-    card.append(a, pName, btnFav);
-    similaresGridEl.appendChild(card);
-  });
-}
+        card.append(a, pName, btnFav);
+        similaresGridEl.appendChild(card);
+      });
+    }
 
-
-    // Botón favorito
+    // Botón favorito principal
     renderBotonFavorito(producto);
   });
 }
