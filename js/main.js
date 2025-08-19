@@ -49,7 +49,7 @@ function renderBotonFavorito(producto) {
     // 👇 Esto hace que se vea como link/texto plano
     favBtn.style.background = "none";
     favBtn.style.border = "none";
-    favBtn.style.padding = "0";
+    favBtn.style.padding = "15px";
     favBtn.style.cursor = "pointer";
     favBtn.style.font = "inherit"; // usa misma fuente del texto
     favBtn.style.color = "#0077cc"; // mismo color de texto
