@@ -391,9 +391,10 @@ function initIndexPage() {
     } else if (sortVal === "newest") {
       arr.sort((a, b) => newestKey(b.p, b.idx) - newestKey(a.p, a.idx));
     } else {
-      // default → orden original
-      arr.sort((a, b) => a.idx - b.idx);
+    // default → orden aleatorio
+    arr.sort(() => Math.random() - 0.5);
     }
+
 
     filtered = arr.map(x => x.p);
     page = 1;
